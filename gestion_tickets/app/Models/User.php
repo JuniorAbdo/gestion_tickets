@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'droit',
+        
     ];
 
     /**
@@ -41,4 +44,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function isResponsable(){
+        return $this->droit;
+    }
+    public function isAdmin(){
+        return $this->role;
+    }
 }
