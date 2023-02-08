@@ -24,18 +24,20 @@ class TicketController extends Controller
     {
         $data=DB::table('tickets')->paginate(8) ;
         
-        $tickets=[];
-        echo count($data);
-        echo var_dump($data);
-        // for($i=0; $i<count($data); $i++) {
-        //     $tickets['id']=$data[$i]->id;
-        //     $tickets['title']=$data[$i]->title;
-        //     $tickets['crate_at']=$data[$i]->created_at;
+        // $tickets=array();
+        
+        $tickets=array();
+        for($i=0; $i<count($data); $i++) {
+            $tickets[$i]['id']=$data[$i]->id;
+            $tickets[$i]['title']=$data[$i]->title;
+            $tickets[$i]['created_at']=$data[$i]->created_at;
 
-        //     $tickets['csc']=DB::table('cscs')->where('id', $data[$i]->csc_id)->value('libelle_csc');
-        //     $tickets['etat']=DB::table('etats')->where('id', $data[$i]->etat_id)->value('intitule_etat');
-        // }
-        // return view('tickets.index', ['tickets'=>$tickets]);
+            $tickets[$i]['csc']=DB::table('cscs')->where('id', $data[$i]->csc_id)->value('libelle_csc');
+            $tickets[$i]['etat']=DB::table('etats')->where('id', $data[$i]->etat_id)->value('intitule_etat');
+        }
+        // $tickets['tikets']=$tick;
+        return view('tickets.index', ['tickets'=>$tickets]);
+        
     }
 
     /**
