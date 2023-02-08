@@ -22,7 +22,20 @@ class TicketController extends Controller
 
     public function index()
     {
+        $data=DB::table('tickets')->paginate(8) ;
         
+        $tickets=[];
+        echo count($data);
+        echo var_dump($data);
+        // for($i=0; $i<count($data); $i++) {
+        //     $tickets['id']=$data[$i]->id;
+        //     $tickets['title']=$data[$i]->title;
+        //     $tickets['crate_at']=$data[$i]->created_at;
+
+        //     $tickets['csc']=DB::table('cscs')->where('id', $data[$i]->csc_id)->value('libelle_csc');
+        //     $tickets['etat']=DB::table('etats')->where('id', $data[$i]->etat_id)->value('intitule_etat');
+        // }
+        // return view('tickets.index', ['tickets'=>$tickets]);
     }
 
     /**
@@ -59,16 +72,23 @@ class TicketController extends Controller
             'required'=>'ce champ est obligatoire',
         ]);
         if ($Validator->fails()){
-            echo 'here';
-            // return redirect('tickets/create')
-            // ->withErrors($Validator->errors())
-            // ->withInput();
+           
+            return redirect('tickets/create')
+            ->withErrors($Validator->errors())
+            ->withInput();
         }
         $lastInsert=DB::table('tickets')->get()->last();
         
-        $lastId = $lastInsert->id;
+        if($lastInsert==null){
+            $lastId=1;
+        }
+        else{
+            $lastId = $lastInsert->id;
+        }
         
-        if(empty($lastId)){
+
+        
+        if($lastId===null){
             $lastId=1;
         }
         $idCategorie=DB::table('categories')->where('intitule', $request->input('categorie'))->value('id');
@@ -77,10 +97,12 @@ class TicketController extends Controller
         $idUser=$request->user()->id;
         
         $idCsc=DB::table('cscs')->where('libelle_csc',$request->input('csc'))->value('id');
-        $namePice=date('his').'.'.$request->getClientOriginalExtension();
+       
+        $namePice=date('ymdhis').'.'.$request->file('pice')->getClientOriginalExtension();
+        echo $namePice.date('his');
         Storage::disk('public')->putFileAs('tickets/image',$request->pice,$namePice);
         DB::table('tickets')->insert([
-            'number_ticket'=>$request->input('key').$lastId,
+            'number_ticket'=>$request->input('key_ticket').'_'.$lastId,
             'title'=>$request->input('title'),
             'description'=>$request->input('detail'),
             'pice'=>$namePice,
@@ -89,10 +111,15 @@ class TicketController extends Controller
             'sous_categorie_id'=>$idSousCategorie,
             'etat_id'=>1,
             'categorie_id'=>$idCategorie,
-            'created_at'=>date('d-m-Y'),
+            'created_at'=>date('Y-m-d H:i:s'),
+            
 
 
         ]);
+        // return response("<div class='alert alert-success' role='alert'>
+        //     A simple success alert—check it out!
+        //   </div>");
+        return redirect('tickets/create')->with('message_succusse','ticket cree avec succssé');
     }
 
     /**

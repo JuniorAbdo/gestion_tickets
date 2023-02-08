@@ -15,11 +15,17 @@
 </head>
 
 <body>
+   <div class="container text-center ">
+  <div class="row justify-content-md-center ">
+    <div class="col-6  bg-primary border border-primary-subtle rounded-3">
+     <h3>Creer un nouveau ticket</h3>
+    </div>
+  </div>
+   </div>
    <div class="container">
-    
-    <div class="row justifay-content-center">
+    <div class="row justify-content-md-center">
       <div class="col-6">
-        <form method='POST' action={{route('tickets.store')}}>
+        <form method='POST' action={{route('tickets.store')}} enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label  class="form-label">Titre</label>
@@ -38,7 +44,7 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             <div class="mb-3">
-                <label  class="form-label">categorie</label>
+                <label  class="form-label">catégorié ticket</label>
                     <select class="form-select" name="categorie" >
                        
                          @for ($i = 0; $i < count($categories); $i++)
@@ -52,10 +58,10 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             <div class="mb-3">
-                <label  class="form-label">Sous categorie</label>
+                <label  class="form-label">Sous catégorié ticket</label>
                     <select class="form-select" name="sous_categorie">
                         @for ($i = 0; $i < count($typeCategories); $i++)
-                        <option value={{$typeCategories[$i]->intitule}}>{{$typeCategories[$i]->intitule }} </option>
+                        <option value="{{$typeCategories[$i]->intitule}}">{{$typeCategories[$i]->intitule }} </option>
                         @endfor
                     </select>
             </div>
@@ -71,7 +77,7 @@
             <select class="form-select" name="csc">
                
                @for ($i = 0; $i < count($cscs); $i++)
-                  <option value={{$cscs[$i]->libelle_csc}}>{{$cscs[$i]->libelle_csc}} </option>
+                  <option value="{{$cscs[$i]->libelle_csc}}">{{$cscs[$i]->libelle_csc}} </option>
                @endfor
                   
               
@@ -80,24 +86,25 @@
                 @error('csc')
                   <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
+                <div class="mb-3">
+                    <label class="form-check-label" >
+                        Type ticket
+                      </label>
+                </div>
+                
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="key_ticket" value="RSU" >
-                <label class="form-check-label" >
-                  RSU
-                </label>
+                <input class="form-check-input" type="radio" name="key_ticket" value="RSU" >RSU
 
               </div>
               <div class="form-check form-check-inline">
                 
-                <input class="form-check-input" type="radio" name="key_ticket" value="IDP" >
-                <label class="form-check-label" >
-                 IDP
-                </label>
+                <input class="form-check-input" type="radio" name="key_ticket" value="IDP" >IDP
+                
               </div>
               @error('key_ticket')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-            <div class="mb-3">
+            <div class="mb-3 justify-content-md-center bg-danger">
                 <button type="submit" class="btn btn-primary">Cree</button>
             </div>
            
@@ -108,5 +115,13 @@
       </div>
     </div>
    </div>
+   
+  @if(!empty(Session::get('message_succusse')))
+  <div class="alert alert-success" role="alert">
+    {{Session::get('message_succusse')}}fdqsgs
+  
+  </div>
+  @endisset
+  
 </body>
 </html>

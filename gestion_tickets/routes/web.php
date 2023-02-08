@@ -17,12 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::view('/test','theme.template');
 
-//route tickets
-Route::resource('tickets',TicketController::class);
+
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//route tickets
+Route::resource('tickets',TicketController::class);
