@@ -18,9 +18,8 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('number_ticket')->unique();
             $table->string('title');
-            $table->date('date_creation');
             $table->longText('description');
-            $table->string('pices');
+            $table->string('pice');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('csc_id');
@@ -29,6 +28,8 @@ return new class extends Migration
             $table->foreign('etat_id')->references('id')->on('etats');
             $table->unsignedInteger('categorie_id');
             $table->foreign('categorie_id')->references('id')->on('categories');
+            $table->unsignedInteger('sous_categorie_id');
+            $table->foreign('sous_categorie_id')->references('id')->on('sous_categories');
             $table->timestamps();
         });
     }

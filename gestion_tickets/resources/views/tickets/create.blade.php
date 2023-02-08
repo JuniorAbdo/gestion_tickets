@@ -23,35 +23,45 @@
             @csrf
             <div class="mb-3">
                 <label  class="form-label">Titre</label>
-                <input type="text" class="form-control" name="titre" >
+                <input type="text" class="form-control" name="title" >
             </div>
+            
+                @error('title')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            
             <div class="mb-3" >
                 <label  class="form-label">Détail</label>
                 <textarea class="form-control" rows="3" name="detail"></textarea>
             </div>
+            @error('detail')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-3">
-                <label  class="form-label">date</label>
-                <input type="date" class="form-control"  name="date">
-              </div>
-            <div class="mb-3">
-                <label  class="form-label">Type</label>
-                    <select class="form-select" name="type" >
+                <label  class="form-label">categorie</label>
+                    <select class="form-select" name="categorie" >
                        
                          @for ($i = 0; $i < count($categories); $i++)
-                         <option value={{$categories[$i]->intitule}}>{{$categories[$i]->intitule}} </option>
+                         <option value="{{$categories[$i]->intitule}}">{{$categories[$i]->intitule}} </option>
                          @endfor
                          
 
                     </select >
             </div>
+            @error('categorie')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-3">
-                <label  class="form-label">Categories</label>
-                    <select class="form-select" name="categorie">
+                <label  class="form-label">Sous categorie</label>
+                    <select class="form-select" name="sous_categorie">
                         @for ($i = 0; $i < count($typeCategories); $i++)
-                        <option value={{$typeCategories[$i]->intitule_type }}>{{$typeCategories[$i]->intitule_type }} </option>
+                        <option value={{$typeCategories[$i]->intitule}}>{{$typeCategories[$i]->intitule }} </option>
                         @endfor
                     </select>
             </div>
+            @error('sous_categorie')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-3">
                 <label  class="form-label">Pices jointe</label>
                 <input class="form-control" type="file" name="pice">
@@ -67,8 +77,28 @@
               
             </select>
             </div>
+                @error('csc')
+                  <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="key_ticket" value="RSU" >
+                <label class="form-check-label" >
+                  RSU
+                </label>
+
+              </div>
+              <div class="form-check form-check-inline">
+                
+                <input class="form-check-input" type="radio" name="key_ticket" value="IDP" >
+                <label class="form-check-label" >
+                 IDP
+                </label>
+              </div>
+              @error('key_ticket')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             <div class="mb-3">
-                <button type="button" class="btn btn-outline-primary">Cree</button>
+                <button type="submit" class="btn btn-primary">Cree</button>
             </div>
            
 

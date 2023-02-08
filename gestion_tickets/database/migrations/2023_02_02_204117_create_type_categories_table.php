@@ -14,11 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('type_categories', function (Blueprint $table) {
+        Schema::create('sous_categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('intitule_type');
-            $table->unsignedInteger('categorie_id');
-            $table->foreign('categorie_id')->references('id')->on('categories');
+            $table->string('intitule')->unique();
+            
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_categories');
+        Schema::dropIfExists('sous_categories');
     }
 };
