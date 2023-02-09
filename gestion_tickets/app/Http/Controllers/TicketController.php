@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\Vue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -132,7 +133,19 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        //
+        $ticket=DB::table('tickets')->where('id',$id)->get();
+        $externDAta=array();
+        $csc=DB::table('cscs')->where('id',$ticket[0]->csc_id)->get();
+        
+        $externDAta['csc']=$csc[0]->libelle_csc;
+        $etat=DB::table('etats')->where('id',2)->get();
+        $externDAta['etat']=$etat[0]->intitule_etat;
+        $categorie=DB::table('categories')->where('id',$ticket[0]->categorie_id)->get();
+        $externDAta['categorie']=$categorie[0]->intitule;
+        $sous_categorie=DB::table('sous_categories')->where('id',$ticket[0]->sous_categorie_id)->get();
+        $externDAta['sous_categorie']=$sous_categorie[0]->intitule;
+
+        return view('tickets.show',['ticket'=>$ticket,'externData'=>$externDAta]);
     }
 
     /**
