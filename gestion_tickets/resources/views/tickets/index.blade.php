@@ -1,43 +1,21 @@
-
-@section('name')
-
-    
-@endsection
-<!doctype html>
-<html>
-<head>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-   
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
-<body>
-    <div class="container text-center">
+@extends('layouts.template')
+@section('tilte','Liste des Tickets')
+@section('content')
+    <div class="container text-center mt-3">
         <div class="row">
-            <div class="col-8">
-                <h1>liste des 8 derniere tickets</h1>
+            <div class="col-12 bg-info border border-dark rounded-3 ">
+               liste des tickets
             </div>
         </div>
     </div>
     
-    <div class="container text-center">
-        <div class="row justify-content-end">
-            <div class="col-4">
-                <a href="{{route('tickets.create')}}">
-                    <button type="button" class="btn btn-primary btn-lg">creer ticket</button>
-                </a>
-            </div>
-        </div>
-       
-        {{-- {{dd($tickets)}} --}}
+    
       
-        <table class="table table-striped">
+        <table class="table table-striped  table-bordered mt-5 text-center">
             <thead>
               <tr>
-                <th scope="col">title</th>
-                <th scope="col">date de ticket</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date de ticket</th>
                 <th scope="col">Etat</th>
                 <th scope="col">CSC</th>
                 <th>Actions</th>
@@ -60,10 +38,15 @@
                         </td>
                     
               @empty
-                  
+                  <tr>
+                    <td colspan="4">
+                        <div class="text-danger">
+                            aucun Ticket trouvé
+                        </div>
+                    </td>
+                  </tr>
               @endforelse
             </tbody>
         </table>
     </div>
-</body>
-</html>
+@endsection

@@ -88,22 +88,21 @@ class TicketController extends Controller
         else{
             $lastId = $lastInsert->id;
         }
-        
 
-        
-        if($lastId===null){
-            $lastId=1;
-        }
+        // if($lastId===null){
+        //     $lastId=1;
+        // }
         $idCategorie=DB::table('categories')->where('intitule', $request->input('categorie'))->value('id');
-        
         $idSousCategorie = DB::table('sous_categories')->where('intitule',$request->input('sous_categorie'))->value('id');
         $idUser=$request->user()->id;
-        
         $idCsc=DB::table('cscs')->where('libelle_csc',$request->input('csc'))->value('id');
+        $namePice=null;
+        if($request->file('pice')!==null){
+            $namePice=date('ymdhis').'.'.$request->file('pice')->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('tickets/image',$request->pice,$namePice);
+        }
+        
        
-        $namePice=date('ymdhis').'.'.$request->file('pice')->getClientOriginalExtension();
-        echo $namePice.date('his');
-        Storage::disk('public')->putFileAs('tickets/image',$request->pice,$namePice);
         DB::table('tickets')->insert([
             'number_ticket'=>$request->input('key_ticket').'_'.$lastId,
             'title'=>$request->input('title'),
@@ -133,12 +132,19 @@ class TicketController extends Controller
      */
     public function show($id)
     {
+         //externData c'est les données qui revient par d'autre table et pas tickets table
+
         $ticket=DB::table('tickets')->where('id',$id)->get();
         $externDAta=array();
         $csc=DB::table('cscs')->where('id',$ticket[0]->csc_id)->get();
-        
+        $etatId=$ticket[0]->etat_id;
+        if($etatId===1){
+            DB::table('tickets')->where('id',$id)->update([
+                'etat_id'=>2,
+            ]);
+        }
         $externDAta['csc']=$csc[0]->libelle_csc;
-        $etat=DB::table('etats')->where('id',2)->get();
+        $etat=DB::table('etats')->where('id',$etatId)->get();
         $externDAta['etat']=$etat[0]->intitule_etat;
         $categorie=DB::table('categories')->where('id',$ticket[0]->categorie_id)->get();
         $externDAta['categorie']=$categorie[0]->intitule;

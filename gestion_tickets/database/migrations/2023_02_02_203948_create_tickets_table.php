@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('number_ticket')->unique();
             $table->string('title');
             $table->longText('description');
-            $table->string('pice');
+            $table->string('pice')->nullable();
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('csc_id');

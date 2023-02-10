@@ -1,10 +1,7 @@
+@extends('layouts.template')
 
-@section('name')
-
-    
-@endsection
 <!doctype html>
-<html>
+{{-- <html>
 <head>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -14,13 +11,25 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body>
+<body>  --}}
+    @section('title','Créer un nouveau ticket')
+    @section('content')
    <div class="container text-center ">
   <div class="row justify-content-md-center ">
-    <div class="col-6  bg-primary border border-primary-subtle rounded-3">
-     <h3>Creer un nouveau ticket</h3>
+    <div class="col-6  bg-info border border-secondary mt-3 rounded-3">
+     Créer un nouveau ticket
     </div>
   </div>
+   </div>
+   @if(!empty(Session::get('message_succusse')))
+   <div class="container">
+    <div class="row justify-content-md-center">
+  <div class="alert alert-success col-6" role="alert">
+    {{Session::get('message_succusse')}}
+  </div>
+</div>
+@endif
+
    </div>
    <div class="container">
     <div class="row justify-content-md-center">
@@ -33,7 +42,7 @@
             </div>
             
                 @error('title')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="alert alert-danger ">{{ $message }}</div>
                 @enderror
             
             <div class="mb-3" >
@@ -66,7 +75,7 @@
                     </select>
             </div>
             @error('sous_categorie')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <div class="alert alert-danger mb-3">{{ $message }}</div>
                 @enderror
             <div class="mb-3">
                 <label  class="form-label">Pices jointe</label>
@@ -104,24 +113,15 @@
               @error('key_ticket')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-            <div class="mb-3 justify-content-md-center bg-danger">
-                <button type="submit" class="btn btn-primary">Cree</button>
+            <div class="mb-3 justify-content-center mt-3  ">
+                <button type="submit" class="btn btn-primary me-5" >Créer Tichet</button>
             </div>
-           
 
-    
             
         </form>
       </div>
     </div>
    </div>
    
-  @if(!empty(Session::get('message_succusse')))
-  <div class="alert alert-success" role="alert">
-    {{Session::get('message_succusse')}}fdqsgs
   
-  </div>
-  @endisset
-  
-</body>
-</html>
+  @endsection
