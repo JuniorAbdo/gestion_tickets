@@ -27,3 +27,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 //route tickets
 Route::resource('tickets',TicketController::class);
+Route::view('errors','tickets.errors')->name('errors');
+Route::post('/rechercher/etat',[TicketController::class,'searchByEtat'])->name('serache.etat');
+Route::post('/rechercher/csc',[TicketController::class,'searchByCsc'])->name('serache.csc');

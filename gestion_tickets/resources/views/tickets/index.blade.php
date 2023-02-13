@@ -1,8 +1,13 @@
 @extends('layouts.template')
-@section('tilte','Liste des Tickets')
+@section('title','Liste des Tickets')
 @section('content')
     <div class="container text-center mt-3">
         <div class="row">
+            @error('neveauDtail')
+            <div class="alert alert-danger ">
+                {{$message}}
+            </div>
+            @enderror
             <div class="col-12 bg-info border border-dark rounded-3 ">
                liste des tickets
             </div>

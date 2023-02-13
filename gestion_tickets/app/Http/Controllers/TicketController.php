@@ -8,6 +8,7 @@ use Laravel\Ui\Presets\Vue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use voku\helper\ASCII;
 
 class TicketController extends Controller
 {
@@ -162,7 +163,14 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ticket=DB::table('tickets')->where('id',$id)->get();
+        $etatId=$ticket[0]->etat_id;
+        $etat=DB::table('etats')->where('id',$etatId)->get();
+        $etatTicket=$etat[0]->intitule_etat;
+        $intilueEtats=DB::table('etats')->where('id', '>=',$etatId)->get();
+
+        
+        return view('tickets.edit',['ticket'=>$ticket,'etatTicket'=>$etatTicket,'intituleEtats'=>$intilueEtats] );
     }
 
     /**
@@ -174,7 +182,32 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator=Validator::make($request->all(),[
+            
+            'neveauDtail'=>'required',
+            'etat'=>'required',
+        ],[
+            'required'=>'ce champ est obligatoire',
+            
+        ]);
+        if ($validator->fails()){
+            return redirect('errors')
+             ->withErrors($validator->errors());
+            
+        }
+        $user=$request->user()->name;
+        
+        $etatId=DB::table('etats')->where('intitule_etat',$request->input('etat'))->get()->value('id');
+        $update=DB::table('tickets')->where('id',$id)->update([
+             'description'=>"\r".$request->input('detail')."\r".date('d-m-y')."  ".$user." :\r".str_replace("\r","</br>",$request->input('neveauDtail')),
+            // 'description'=>chr(10). "$request->input('detail')".chr(10).date('d-m-y')."$user : " . chr(10),
+            'etat_id'=>$etatId,
+            'updated_at'=>date('y-m-d H:i:s'),
+
+        ]);
+         
+   
+        return redirect('tickets');
     }
 
     /**
@@ -186,5 +219,35 @@ class TicketController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function searchByEtat(Request $request){
+        $dataExstern=[];
+        $etat=DB::table('etats')->where('intitule_etat',$request->input('etat'))->get();
+        $idEtat=$etat[0]->id;
+        $etatRecherche=$etat[0]->intitule_etat;
+        $tickets=DB::table('tickets')->where('etat_id',$idEtat)->get();
+        for($i=0;$i<count($tickets);$i++){
+            $idCsc=$tickets[$i]->csc_id;
+            $cscRchercher=DB::table('cscs')->where('id',$idCsc)->get();
+            $dataExstern[$i]=$cscRchercher[0]->libelle_csc;
+
+        }
+        
+         return view('tickets.rechercherEtat',['tickets'=>$tickets,'dataExstern'=>$dataExstern,'etat'=>$etatRecherche]);
+    }
+    public function searchByCsc(Request $request){
+        $dataExstern = [];
+        $csc = DB::table('cscs')->where('libelle_csc',$request->input('csc'))->get();
+        $idCsc = $csc[0]->id;
+        $cscRecherche = $csc[0]->libelle_csc;
+        $tickets=DB::table('tickets')->where('csc_id',$idCsc)->get();
+        for ($i = 0; $i < count($tickets) ; $i++) {
+            $idEtat = $tickets[$i]->etat_id;
+            $cscRchercher = DB::table('etats')->where('id',$idEtat)->get();
+            $dataExstern[$i] = $cscRchercher[0]->intitule_etat;
+
+        }
+        
+         return view('tickets.rechercherCsc', ['tickets'=>$tickets,'dataExstern'=>$dataExstern,'csc'=>$cscRecherche]);
     }
 }

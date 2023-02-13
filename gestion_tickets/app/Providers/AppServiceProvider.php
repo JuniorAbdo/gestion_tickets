@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Csc;
+use App\Models\Etat;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        View::share('etat_data', Etat::all());
+        View::share('csc_data', Csc::all());
     }
 }

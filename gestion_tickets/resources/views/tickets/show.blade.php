@@ -1,23 +1,11 @@
+@extends('layouts.template')
+@section('title','détaile de ticket')
 
-@section('name')
 
-    
-@endsection
-<!doctype html>
-<html>
-<head>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-   
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
-<body>
-    
+@section('content')    
     <div class="container">
         <div class="row  justify-content-center mt-3">
-            <div class="col-9 bg-primary text-center"> 
+            <div class="col-9 bg-info text-center border border-dark rounded-3"> 
                 liste des 8 dernier tickets
             </div>
         </div>
@@ -45,7 +33,8 @@
                 Détail :
             </div>
             <div class="col-6 border border-1 border-dark">
-                {{$ticket[0]->description}}
+                {{-- {{$ticket[0]->description}} --}}
+                {!!str_replace("\r","<br>",$ticket[0]->description)!!}
             </div>
         </div>
         <div class="row justify-content-center">
@@ -105,8 +94,15 @@
                
             </div>
         </div>
+        <div class="row justify-content-center mt-3 " >
+            <div class="col-3">
+                <a href="{{route('tickets.edit',['ticket'=>$ticket[0]->id])}}"><button type="button" class="btn btn-info text-white btn-lg">Ajouter détail</button></a>
+            </div>
+            <div class="col-6"></div>
+        </div>
     
 </div>
+@endsection
         
 
 
