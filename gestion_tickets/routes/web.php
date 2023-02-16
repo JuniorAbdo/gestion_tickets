@@ -34,4 +34,5 @@ Route::post('/rechercher/csc',[TicketController::class,'searchByCsc'])->name('se
 Route::get('/chartjs', function () {
     return view('tickets.mychart');
 });
-Route::get('/testt',[ChartController::class,'chartCscParSemaine']);
+Route::get('/chart/csc/semaine',[ChartController::class,'chartCscParSemaine']);
+Route::get('/chart/csc/mois',[ChartController::class,'chartCscParMois']);

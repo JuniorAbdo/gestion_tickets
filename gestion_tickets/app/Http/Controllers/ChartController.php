@@ -16,12 +16,12 @@ class ChartController extends Controller
         //remplire la table par le nomber de ticket pour chaque semaine
 
         $firstOfWeek=now()->startOfWeek();
-        $lastOfWeek=now()->endOfWeek();
-        $numberWeekOfYrear=$firstOfWeek->weekOfYear;
+        $lastOfMonth=now()->endOfWeek();
+        // $numberWeekOfYrear=$firstOfWeek->weekOfYear;
         $tickets=DB::table('tickets')->select(['csc_id','libelle_csc',
         DB::raw('COUNT(csc_id) as number_csc')])
         ->join('cscs','csc_id','=','cscs.id')
-        ->whereBetween('created_at',[$firstOfWeek,$lastOfWeek])
+        ->whereBetween('created_at',[$firstOfWeek,$lastOfMonth])
         ->groupBy('csc_id')
         ->get() ;
 
@@ -43,13 +43,13 @@ class ChartController extends Controller
         $cscs=DB::table('cscs')->get()->pluck('libelle_csc');
         //remplire la table par le nomber de ticket pour chaque semaine
 
-        $firstOfWeek=now()->startOfWeek();
-        $lastOfWeek=now()->endOfWeek();
-        $numberWeekOfYrear=$firstOfWeek->weekOfYear;
+        $firstOfMonth=now()->startOfMonth();
+        $lastOfWeek=now()->endOfMonth();
+        $numberWeekOfYrear=$firstOfMonth->weekOfYear;
         $tickets=DB::table('tickets')->select(['csc_id','libelle_csc',
         DB::raw('COUNT(csc_id) as number_csc')])
         ->join('cscs','csc_id','=','cscs.id')
-        ->whereBetween('created_at',[$firstOfWeek,$lastOfWeek])
+        ->whereBetween('created_at',[$firstOfMonth,$lastOfWeek])
         ->groupBy('csc_id')
         ->get() ;
 
