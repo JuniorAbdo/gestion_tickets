@@ -20,5 +20,5 @@ class Ticket extends Model
         'sous_categorie_id',
         'created_at',
         'updated_at',
-    ]
+    ];
 }

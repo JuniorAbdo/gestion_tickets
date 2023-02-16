@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('sous_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('intitule')->unique();
+            $table->unsignedInteger('categorie_id');
+            $table->foreign('categorie_id')->references('id')->on('categories');
             
         });
     }

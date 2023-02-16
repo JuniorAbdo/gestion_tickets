@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Csc;
 use App\Models\Etat;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Paginator::useBootstrapFive();
         View::share('etat_data', Etat::all());
         View::share('csc_data', Csc::all());
     }

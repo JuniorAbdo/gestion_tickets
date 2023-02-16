@@ -28,6 +28,7 @@ class TicketController extends Controller
         
         // $tickets=array();
         
+        
         $tickets=array();
         for($i=0; $i<count($data); $i++) {
             $tickets[$i]['id']=$data[$i]->id;
@@ -38,7 +39,7 @@ class TicketController extends Controller
             $tickets[$i]['etat']=DB::table('etats')->where('id', $data[$i]->etat_id)->value('intitule_etat');
         }
         // $tickets['tikets']=$tick;
-        return view('tickets.index', ['tickets'=>$tickets]);
+        return view('tickets.index', ['tickets'=>$tickets,'data'=>$data]);
         
     }
 

@@ -3,8 +3,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
+import './mychart.js';
 import './bootstrap';
+import  chart  from 'chart.js/auto';
 import { createApp } from 'vue';
 
 /**

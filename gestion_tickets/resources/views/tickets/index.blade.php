@@ -50,8 +50,16 @@
                         </div>
                     </td>
                   </tr>
+
               @endforelse
             </tbody>
         </table>
+    </div>
+    <div class="container">
+       
+        <div class="row justify-content-center">
+            {{$data->links() }}
+        </div>
+        
     </div>
 @endsection
