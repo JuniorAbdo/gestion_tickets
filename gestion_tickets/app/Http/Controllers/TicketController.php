@@ -27,7 +27,7 @@ class TicketController extends Controller
         $data=DB::table('tickets')->paginate(8) ;
         
         // $tickets=array();
-        
+    
         
         $tickets=array();
         for($i=0; $i<count($data); $i++) {
@@ -228,7 +228,7 @@ class TicketController extends Controller
         $etat=DB::table('etats')->where('intitule_etat',$request->input('etat'))->get();
         $idEtat=$etat[0]->id;
         $etatRecherche=$etat[0]->intitule_etat;
-        $tickets=DB::table('tickets')->where('etat_id',$idEtat)->get();
+        $tickets=DB::table('tickets')->where('etat_id',$idEtat)->paginate(8);
         for($i=0;$i<count($tickets);$i++){
             $idCsc=$tickets[$i]->csc_id;
             $cscRchercher=DB::table('cscs')->where('id',$idCsc)->get();
@@ -241,9 +241,11 @@ class TicketController extends Controller
     public function searchByCsc(Request $request){
         $dataExstern = [];
         $csc = DB::table('cscs')->where('libelle_csc',$request->input('csc'))->get();
+        
         $idCsc = $csc[0]->id;
         $cscRecherche = $csc[0]->libelle_csc;
-        $tickets=DB::table('tickets')->where('csc_id',$idCsc)->get();
+        $tickets=DB::table('tickets')->where('csc_id',$idCsc)->paginate(8);
+      
         for ($i = 0; $i < count($tickets) ; $i++) {
             $idEtat = $tickets[$i]->etat_id;
             $cscRchercher = DB::table('etats')->where('id',$idEtat)->get();

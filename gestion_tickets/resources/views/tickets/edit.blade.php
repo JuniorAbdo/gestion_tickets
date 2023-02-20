@@ -1,6 +1,11 @@
 @extends('layouts.template')
 @section('title','modifer un ticket')
 @section('content')
+<div class="row justify-content-md-center ">
+    <div class="col-6  bg-info border border-secondary mt-3 rounded-3 h3">
+     Ajouter des détail à ce ticket
+    </div>
+  </div>
 <div class="container">
  
     <div class="row">
@@ -44,8 +49,8 @@
                             @endif>{{$intituleEtats[$i]->intitule_etat}} </option>
                         @endfor
                     </select>
-                    <div>
-                        <button type="submit" class="btn btn-primary" >Add détail</button>
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary" >Ajouter détail</button>
                     </div>
                   </div>
             </form>

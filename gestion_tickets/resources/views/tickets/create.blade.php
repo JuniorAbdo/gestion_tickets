@@ -16,7 +16,7 @@
     @section('content')
    <div class="container text-center ">
   <div class="row justify-content-md-center ">
-    <div class="col-6  bg-info border border-secondary mt-3 rounded-3">
+    <div class="col-6  bg-info border border-secondary mt-3 rounded-3 h3">
      Créer un nouveau ticket
     </div>
   </div>
@@ -107,7 +107,7 @@
               </div>
               <div class="form-check form-check-inline">
                 
-                <input class="form-check-input" type="radio" name="key_ticket" value="IDP" >IDP
+                <input class="form-check-input" type="radio" name="key_ticket" value="IDP" >RNP
                 
               </div>
               @error('key_ticket')

@@ -4,7 +4,7 @@
 
 @section('content')    
     <div class="container">
-        <div class="row  justify-content-center mt-3">
+        <div class="row  justify-content-center mt-3 h3">
             <div class="col-9 bg-info text-center border border-dark rounded-3"> 
                 liste des 8 dernier tickets
             </div>
@@ -12,73 +12,73 @@
     </div>
   
     <div class=" container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3 mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white ">
                 Code Ticket  :
             </div>
-            <div class="col-6 border border-1 border-dark">
+            <div class="col-6 border border-1 border-dark ">
                 {{$ticket[0]->number_ticket}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 Titre :
             </div>
             <div class="col-6 border border-1 border-dark">
                 {{$ticket[0]->title}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 Détail :
             </div>
-            <div class="col-6 border border-1 border-dark">
+            <div class="col-6 border border-1 border-dark  mb-0">
                 {{-- {{$ticket[0]->description}} --}}
                 {!!str_replace("\r","<br>",$ticket[0]->description)!!}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 Date de creation :
             </div>
             <div class="col-6 border border-1 border-dark">
                 {{$ticket[0]->created_at}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 CSC :
             </div>
             <div class="col-6 border border-1 border-dark">
                 {{$externData['csc']}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark border border-1 border-white text-white">
                 Catégorié :
             </div>
             <div class="col-6 border border-1 border-dark">
                 {{$externData['categorie']}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 Sous catégorié :
             </div>
             <div class="col-6 border border-1 border-dark">
                 {{$externData['sous_categorie']}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 Etat de ticket :
             </div>
             <div class="col-6 border border-1 border-dark">
                 {{$externData['etat']}}
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-3 bg-secondary border border-1 border-dark text-white">
+        <div class="row justify-content-center h3  mb-0">
+            <div class="col-3 bg-dark  border border-1 border-white text-white">
                 Pice Jointe :
             </div>
             <div class="col-6 border border-1 border-dark">
