@@ -90,23 +90,25 @@ class TicketController extends Controller
         else{
             $lastId = $lastInsert->id;
         }
-
+        
         // if($lastId===null){
         //     $lastId=1;
         // }
-        $idCategorie=DB::table('categories')->where('intitule', $request->input('categorie'))->value('id');
+        $idCategorie=DB::table('categories')->where('intitule', $request->input('categorie'))->get()->value('id');
         $idSousCategorie = DB::table('sous_categories')->where('intitule',$request->input('sous_categorie'))->value('id');
+       
         $idUser=$request->user()->id;
         $idCsc=DB::table('cscs')->where('libelle_csc',$request->input('csc'))->value('id');
+        
         $namePice=null;
         if($request->file('pice')!==null){
             $namePice=date('ymdhis').'.'.$request->file('pice')->getClientOriginalExtension();
             Storage::disk('public')->putFileAs('tickets/image',$request->pice,$namePice);
         }
         
-       
+       $numberTicket=$lastId + 1;
         DB::table('tickets')->insert([
-            'number_ticket'=>$request->input('key_ticket').'_'.$lastId,
+            'number_ticket'=>$request->input('key_ticket').'_'.$numberTicket,
             'title'=>$request->input('title'),
             'description'=>$request->input('detail'),
             'pice'=>$namePice,
@@ -115,7 +117,7 @@ class TicketController extends Controller
             'sous_categorie_id'=>$idSousCategorie,
             'etat_id'=>1,
             'categorie_id'=>$idCategorie,
-            'created_at'=>date('Y-m-d H:i:s'),
+            'created_at'=> now(),//date('Y-m-d H:i:s'),
             
 
 

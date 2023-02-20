@@ -34,5 +34,13 @@ Route::post('/rechercher/csc',[TicketController::class,'searchByCsc'])->name('se
 Route::get('/chartjs', function () {
     return view('tickets.mychart');
 });
-Route::get('/chart/csc/semaine',[ChartController::class,'chartCscParSemaine']);
-Route::get('/chart/csc/mois',[ChartController::class,'chartCscParMois']);
+Route::middleware(['responsable','auth'])->group(function (){
+    Route::get('/chart/csc/semaine',[ChartController::class,'chartCscParSemaine'])
+    ->name('chart.semaine');
+    Route::get('/chart/csc/mois',[ChartController::class,'chartCscParMois'])
+    ->name('chart.mois');
+    Route::get('/chart/csc/ticket/semaine',[ChartController::class,'chartTicketParSemaine'])
+    ->name('chart.ticket.semaine');
+    Route::get('/chart/csc/ticket/mois',[ChartController::class,'chartTicketCscParMois'])
+    ->name('chart.ticket.mois');
+});
