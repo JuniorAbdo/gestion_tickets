@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use voku\helper\ASCII;
+use App\Models\Ticket;
 
 class TicketController extends Controller
 {
@@ -24,7 +25,8 @@ class TicketController extends Controller
 
     public function index()
     {
-        $data=DB::table('tickets')->paginate(8) ;
+        // $data=DB::table('tickets')->withTrashed()->paginate(8) ;
+        $data=Ticket::withoutTrashed()->paginate(8);
         
         // $tickets=array();
     
@@ -208,6 +210,9 @@ class TicketController extends Controller
             'updated_at'=>date('y-m-d H:i:s'),
 
         ]);
+        if($request->input('etat')=="cloturer"){
+            $ticket=Ticket::where('id',$id)->delete();
+        }
          
    
         return redirect('tickets');
@@ -254,5 +259,46 @@ class TicketController extends Controller
         }
         
          return view('tickets.rechercherCsc', ['tickets'=>$tickets,'dataExstern'=>$dataExstern,'csc'=>$cscRecherche]);
+    }
+    public function searchByCategorie(Request $request){
+       
+        $etats = [];
+        $cscs=[];
+        $categorie = DB::table('sous_categories')->where('intitule',$request->input('categorie'))->get();
+        
+        $idCategorie = $categorie[0]->id;
+        // $categorieRecherche = $categorie[0]->intitule;
+       
+        $tickets=DB::table('tickets')->where('sous_categorie_id',$idCategorie)->paginate(8);
+   
+        for ($i = 0; $i < count($tickets) ; $i++) {
+            $idEtat = $tickets[$i]->etat_id;
+            $etatRchercher = DB::table('etats')->where('id',$idEtat)->value('intitule_etat');
+            $idCsc=$tickets[$i]->csc_id;
+            $cscRechercher=DB::table('cscs')->where('id',$idCsc)->value('libelle_csc');
+           $etats[]=$etatRchercher;
+           $cscs[]=$cscRechercher;
+
+        }
+       
+        
+          return view('tickets.rechercherCategorie', ['tickets'=>$tickets,'etats'=>$etats,'cscs'=>$cscs]);
+    }
+
+    //fonction qui va afficher seulemnt les tickets cloturer
+    public function ticketsCloturer(){
+        $data=Ticket::onlyTrashed()->paginate(8);
+
+        $tickets=array();
+        for($i=0; $i<count($data); $i++) {
+            $tickets[$i]['id']=$data[$i]->id;
+            $tickets[$i]['title']=$data[$i]->title;
+            $tickets[$i]['created_at']=$data[$i]->created_at;
+
+            $tickets[$i]['csc']=DB::table('cscs')->where('id', $data[$i]->csc_id)->value('libelle_csc');
+            $tickets[$i]['etat']=DB::table('etats')->where('id', $data[$i]->etat_id)->value('intitule_etat');
+        }
+        return view('tickets.softDelete', ['tickets'=>$tickets,'data'=>$data]);
+        
     }
 }

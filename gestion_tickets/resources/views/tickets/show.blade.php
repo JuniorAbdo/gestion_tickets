@@ -5,7 +5,7 @@
 @section('content')    
     <div class="container">
         <div class="row  justify-content-center mt-3 h3">
-            <div class="col-9 bg-info text-center border border-dark rounded-3"> 
+            <div class="col-9 bg-success text-center border border-dark rounded-1 text-white"> 
                 liste des 8 dernier tickets
             </div>
         </div>

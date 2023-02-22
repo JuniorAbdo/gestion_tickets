@@ -16,7 +16,7 @@
     @section('content')
    <div class="container text-center ">
   <div class="row justify-content-md-center ">
-    <div class="col-6  bg-info border border-secondary mt-3 rounded-3 h3">
+    <div class="col-6  bg-success border border-dark mt-3 rounded-1 text-white h3">
      Créer un nouveau ticket
     </div>
   </div>

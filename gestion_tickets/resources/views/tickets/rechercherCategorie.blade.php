@@ -5,20 +5,20 @@
 <div class="container text-center mt-3">
     <div class="row justify-content-center">
         
-        <div class="col-12 bg-success border border-dark rounded-1 text-white ">
-          resultat de recherche  de ticket par etat
+        <div class="col-12 bg-success border border-dark rounded-1 text-white h3 ">
+          Resultat de recherche Par catégorie
         </div>
     </div>
 </div>
-</div>
+
 
 <div class="container text-center mt-4">
   <table class="table table-dark table-striped">
       <tr class="table-primary">
           <th>Titre</th>
           <th>Date Ticket</th>
-          <th>Etat</th>
           <th>csc</th>
+          <th>Etat</th>
           <th>Actions</th>
       </tr>
       <tbody>
@@ -26,8 +26,8 @@
               <tr>
                 <td>{{$tickets[$i]->title}} </td>
                 <td>{{$tickets[$i]->created_at}} </td>
-                <td>{{$etat}} </td>
-                <td>{{$dataExstern[$i]}} </td>
+                <td>{{$cscs[$i]}} </td>
+                <td>{{$etats[$i]}} </td>
                 <td>
                     <a href="{{route('tickets.show',['ticket'=>$tickets[$i]->id])}}">
                     <img src="{{URL::asset("./image/icons/voir.png")}}" class="img-thumbnail" width="40" alt="icone pour voir les détail">
@@ -38,15 +38,16 @@
                     </td>
                   </tr>
                 @endfor
-            @if(count($tickets)==0)
-                <tr>
-                  <td colspan="5"class="text-danger">
-                      
-                          aucun Ticket trouvé
-                      
-                  </td>
-                </tr>
-              @endif
+               
+          @if(count($tickets)==0)
+              <tr>
+                <td colspan="5"class="text-danger">
+                    
+                        aucun Ticket trouvé
+                    
+                </td>
+              </tr>
+            @endif
 
           
         </tbody>
@@ -62,8 +63,4 @@
   
 </div>
 
-
-<div>
-    
-</div>
 @endsection

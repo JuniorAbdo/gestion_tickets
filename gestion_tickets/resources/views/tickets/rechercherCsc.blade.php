@@ -3,10 +3,10 @@
 @section('content')
 
 <div class="container text-center mt-3">
-    <div class="row">
+    <div class="row justify-content-center">
         
-        <div class="col-12 bg-info border border-dark rounded-3 ">
-          resultat de recherche
+        <div class="col-12 bg-success border border-dark rounded-1 text-white ">
+          resultat de recherche CSC
         </div>
     </div>
 </div>
@@ -38,15 +38,15 @@
                     </td>
                   </tr>
                 @endfor
-          @empty($tickets)
-              <tr>
-                <td colspan="4">
-                    <div class="text-danger">
-                        aucun Ticket trouvé
-                    </div>
-                </td>
-              </tr>
-            @endempty
+             @if(count($tickets)==0)
+                <tr>
+                  <td colspan="5"class="text-danger">
+                      
+                          aucun Ticket trouvé
+                      
+                  </td>
+                </tr>
+              @endif
 
           
         </tbody>

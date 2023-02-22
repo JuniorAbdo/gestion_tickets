@@ -1,8 +1,8 @@
 @extends('layouts.template')
 @section('title','modifer un ticket')
 @section('content')
-<div class="row justify-content-md-center ">
-    <div class="col-6  bg-info border border-secondary mt-3 rounded-3 h3">
+<div class="row justify-content-center ">
+    <div class="col-6  bg-success border border-dark mt-3 rounded-1 text-white h3">
      Ajouter des détail à ce ticket
     </div>
   </div>
