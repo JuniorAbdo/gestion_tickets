@@ -249,7 +249,7 @@ class TicketController extends Controller
         
         $idCsc = $csc[0]->id;
         $cscRecherche = $csc[0]->libelle_csc;
-        $tickets=DB::table('tickets')->where('csc_id',$idCsc)->paginate(8);
+        $tickets=Ticket::withoutTrashed()->where('csc_id',$idCsc)->paginate(8);
       
         for ($i = 0; $i < count($tickets) ; $i++) {
             $idEtat = $tickets[$i]->etat_id;
@@ -269,7 +269,8 @@ class TicketController extends Controller
         $idCategorie = $categorie[0]->id;
         // $categorieRecherche = $categorie[0]->intitule;
        
-        $tickets=DB::table('tickets')->where('sous_categorie_id',$idCategorie)->paginate(8);
+         //$tickets=DB::table('tickets')->where('sous_categorie_id',$idCategorie)->paginate(8);
+        $tickets=Ticket::withoutTrashed()->where('sous_categorie_id',$idCategorie)->paginate(8);
    
         for ($i = 0; $i < count($tickets) ; $i++) {
             $idEtat = $tickets[$i]->etat_id;

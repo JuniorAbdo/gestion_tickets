@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\EtatController;
 use App\Http\Controllers\SousCategorieController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
@@ -60,4 +61,5 @@ Route::middleware(['admin','responsable','auth'])->group(function() {
 });
 Route::resource('categories',CategorieController::class)->middleware(['admin','responsable','auth']);
 Route::resource('sousCategories',SousCategorieController::class)->middleware(['admin','responsable','auth']);
+Route::resource('etats',EtatController::class)->middleware(['admin','responsable','auth']);
 

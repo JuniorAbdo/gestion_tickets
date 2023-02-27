@@ -81,7 +81,7 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Nomber deq tickets de chaque type de ce mois '
+                    text: 'Nomber des tickets par type de ce semaine '
                 }
             }
         });

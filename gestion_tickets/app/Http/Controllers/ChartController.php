@@ -76,15 +76,15 @@ class ChartController extends Controller
         $categories=DB::table('sous_categories')->get()->pluck('intitule');
         //remplire la table par le nomber de ticket pour chaque semaine
 
-        $firstOfMonth=now()->startOfWeek();
-        $lastOfMonth=now()->endOfWeek();
+        $startWeek=now()->startOfWeek();
+        $endWeek=now()->endOfWeek();
 
         $tickets=DB::table('tickets')->select(['tickets.id','csc_id','libelle_csc','intitule',
         DB::raw('COUNT(csc_id) as number_csc')
         ])
         ->join('cscs','csc_id','=','cscs.id')
         ->join('sous_categories','sous_categorie_id','=','sous_categories.id')
-        ->whereBetween('created_at',[$firstOfMonth,$lastOfMonth])
+        ->whereBetween('created_at',[$startWeek,$endWeek])
         ->groupBy('sous_categorie_id')
         ->get();
         
